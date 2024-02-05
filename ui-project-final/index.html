@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="no-js" lang="en-US">
+<head>
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Dicke Luft – Die autofreie Friedrichstraße</title>
+    <meta name="robots" content="noindex" />
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="main.css">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+</head>
+<body>
+    <nav>
+        <input id="nav-toggle" type="checkbox"/>
+        <div class="project-titel">
+            <a href="index.html" style="text-decoration: underline">Start</a>
+        </div>
+    
+        <ul class="navbar-links">
+            <li><a href="about.html">Background</a></li>
+            <li><a href="explore.html">Explore</a></li>
+        </ul>
+    
+        <label for="nav-toggle" class="icon-burger"> 
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </label>
+    
+    </nav>
+    
+    <header>        
+        <section>
+            <h1 class="lh1">THICK AIR</h1>
+            <h2 class="lh2">#friedrichstraße</h2>
+            <p class="lp"> No more cars in the middle of Berlin.
+            Friedrichstraße has been closed to cars since September 2020 and is expected to remain so until October 2021. The 500-metre stretch between Französische Strasse and Leipziger Strasse has been transformed into a pedestrian and bicycle zone. The temporary closure should help to slow down the traffic situation and thus make the area more attractive for strollers.
+    <br>
+    <br>
+    Dieses Projekt visualisiert die gemessenen Luftdaten und die gesammelten Twitterbeiträge zur #friedrichstraße. Das Ziel ist die unsichtbaren Veränderungen im Zusammenhang mit der politischen Diskussion abzubilden.
+    </p>
+            <div class="rowbutton">
+                <a href="about.html" class="button">Hintergründe</a>
+                <a href="explore.html" class="button button--primary">Erkunden</a>
+            </div>
+        </section>
+    </header>
+    
+            <div id="map">
+                <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js"></script>
+                <script>
+    
+                mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsaW5hMTIiLCJhIjoiY2s1enVubm92MDE3dTNtbzI5cHFnMTJ1dyJ9.OtIPe2I2Vd7-s8biai9YfA';
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/calina12/ckk949f411z4e17lize0ynrsp', //mapbox://styles/mapbox/light-v10', 
+                    center: [13.385099, 52.513415],
+                    zoom: 14.5,
+                    pitch: 60
+                }); 
+    
+                /* Disable Interactivity von der Map */
+                map.scrollZoom.disable();
+                map.dragPan.disable();
+    
+                function rotateCamera(timestamp) {
+                    // clamp the rotation between 0 -360 degrees
+                    // Divide timestamp by 100 to slow rotation to ~10 degrees / sec
+                    map.rotateTo((timestamp / 600) % 360, { duration: 0 });
+                    // Request the next frame of the animation.
+                    requestAnimationFrame(rotateCamera);
+                }  
+    
+                map.on('load', function () {
+                    // Start the animation.
+                    rotateCamera(0);
+                    document.querySelector('#map').style.opacity = 1;
+    
+                    // Add 3d buildings and remove label layers to enhance the map
+                    var layers = map.getStyle().layers;
+                    for (var i = 0; i < layers.length; i++) {
+                        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+                            // remove text labels
+                            map.removeLayer(layers[i].id);
+                        }
+                    }
+    
+                    map.addLayer({
+                        'id': '3d-buildings',
+                        'source': 'composite',
+                        'source-layer': 'building',
+                        'filter': ['==', 'extrude', 'true'],
+                        'type': 'fill-extrusion',
+                        'minzoom': 15,
+                    });
+                });
+                </script>
+            </div>
+    
+    
+    
+            <footer class="ticker-wrap">
+                <div class="ticker">
+                    <div class="ticker__item">„Ja, es ist einfach nur lächerlich, den Radweg mitten auf der Friedrichstraße als Flaniermeile zu bezeichnen.”</div>
+                    <div class="ticker__item">„Einfach immer wieder herrlich, dem Autolärm und -stress für kurze Zeit zu entkommen und durch die autofreie Friedrichstrasse in Berlin zu radeln 😊 Eine echte Oase der Ruhe!”</div>
+                    <div class="ticker__item">„Die autofreie #Friedrichstrasse muss ein krasser Unfallschwerpunkt sein. Davon steht natürlich nichts in den linksgrünversifften Mainstreammedien.!!!11!111! Zufall?”</div>
+                    <div class="ticker__item">„Großartig! Autofreie Friedrichstraße lädt zum Flanieren und Verweilen ein und stärkt den Fuß- und Radverkehr. Danke @SenUVKBerlin und @RegineGuenther, dass die #Mobilitätswende vorangeht.”</div>
+                    <div class="ticker__item">„Autofreie Friedrichstraße heute Morgen: gerne mehr davon #latetotheparty”</div>
+                    <div class="ticker__item">„Es brummt wieder so langsam in der #Flaniermeile mit Weltformat, unserer geliebten #Friedrichstrasse brumm brumm #Verkehrswende kaput”</div>
+                    <div class="ticker__item">„Missglückte Experimente bricht man ab. #flaniermeile #friedrichstrasse @SenUVKBerlin @RegineGuenther @BurkhardStork”</div>
+                </div>
+            </footer>
+
+    <!-- JS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+    <script src="js/vendor/masonry.js"></script>
+    <script src="js/vendor/imagesLoaded.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
